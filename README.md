@@ -1,12 +1,13 @@
-### 📚 Library Management System on AWS ###
+### 📚 Library Management System on AWS 
 
-## 📌 Project Overview ##
+# 📌 Project Overview 
 
 The Library Management System on AWS is a web application hosted on Amazon EC2 using Nginx. The project demonstrates AWS cloud infrastructure concepts such as VPC networking, public and private subnets, internet-facing and internal Load Balancers, Auto Scaling Groups, AMIs, and Launch Templates.
 
 The website provides a user-friendly interface for browsing books, registering library members, issuing and returning books, and submitting feedback.
 
-## 🎯 Project Objectives ##
+
+# 🎯 Project Objectives 
 
 Deploy a website on Amazon EC2 using Nginx.
 
@@ -22,7 +23,8 @@ Create AMIs and Launch Templates for consistent instance deployment.
 
 Understand cloud networking, availability, scalability, and security.
 
-## ☁️ AWS Services Used ##
+
+# ☁️ AWS Services Used 
 
 Service
 
@@ -84,7 +86,8 @@ Amazon CloudWatch
 
 Supports monitoring and scaling policies when configured
 
-## 💻 Technologies Used ##
+
+# 💻 Technologies Used 
 
 HTML5
 
@@ -106,7 +109,8 @@ Auto Scaling
 
 AMI and Launch Templates
 
-## ✨ Application Features ##
+
+# ✨ Application Features 
 
 Home Page: Overview of the Library Management System.
 
@@ -124,9 +128,10 @@ About Page: Displays project information and technologies.
 
 The frontend is built using HTML, CSS, and JavaScript. The website is served by Nginx on Amazon EC2.
 
-## Deployment Steps ##
 
-# 1. Create the VPC #
+# Deployment Steps 
+
+# 1. Create the VPC 
 
 Create a VPC.
 
@@ -138,7 +143,7 @@ Attach an Internet Gateway to the VPC.
 
 Configure security groups according to the architecture.
 
-# 2. Launch EC2 Instances #
+# 2. Launch EC2 Instances 
 
 Launch Amazon Linux EC2 instances.
 
@@ -176,7 +181,7 @@ Configure the listener.
 
 Create an internal Load Balancer if required by the private-tier architecture.
 
-#5. Create an AMI and Launch Template
+# 5. Create an AMI and Launch Template
 
 Create an AMI from a configured EC2 instance.
 
@@ -184,7 +189,7 @@ Create a Launch Template using the AMI.
 
 Specify the instance type, security groups, and other required settings.
 
-#6. Configure Auto Scaling
+# 6. Configure Auto Scaling
 
 Create an Auto Scaling Group using the Launch Template.
 
@@ -196,29 +201,29 @@ Attach the appropriate target group.
 
 Configure health checks and scaling policies as needed.
 
-##🧪 Testing and Validation
+# 🧪 Testing and Validation
 
 The following tests can be used to validate the deployment:
 
-#Test 1: Website Availability
+# Test 1: Website Availability
 
 Access the website using the Load Balancer DNS name.
 
 Verify that the homepage and other pages load correctly.
 
-#Test 2: Target Group Health
+# Test 2: Target Group Health
 
 Open the target group in the AWS Console.
 
 Verify that the registered EC2 instances are healthy.
 
-#Test 3: Load Balancing
+# Test 3: Load Balancing
 
 Send repeated requests through the Load Balancer.
 
 Use instance-specific information, such as hostname or private IP, to verify which EC2 instance handled a request.
 
-#Test 4: Auto Scaling
+# Test 4: Auto Scaling
 
 Terminate a test EC2 instance managed by the Auto Scaling Group.
 
@@ -226,19 +231,19 @@ Check the Auto Scaling activity history.
 
 Verify that a replacement launches when the group is configured to maintain desired capacity.
 
-#Test 5: Internal Load Balancer
+# Test 5: Internal Load Balancer
 
 Access the internal Load Balancer from an authorized resource in the private network.
 
 Verify connectivity to its configured targets.
 
-#Test 6: AMI and Launch Template
+# Test 6: AMI and Launch Template
 
 Launch a test instance using the Launch Template.
 
 Verify the operating system, Nginx service, and website files.
 
-##📚 Learning Outcomes
+# 📚 Learning Outcomes
 
 This project provides practical experience with:
 
@@ -256,6 +261,6 @@ Security groups and network traffic control.
 
 Hosting and validating a web application in the cloud.
 
-##👨‍💻 Conclusion
+# 👨‍💻 Conclusion
 
 The Library Management System on AWS demonstrates how a web application can be hosted using EC2 and Nginx while leveraging AWS networking, Load Balancers, Auto Scaling, AMIs, and Launch Templates. The project combines frontend development with practical cloud infrastructure deployment and management.
