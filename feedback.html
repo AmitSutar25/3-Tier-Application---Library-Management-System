@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Feedback | My Library</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .navbar {
+            min-height: 76px;
+            padding: 15px 6%;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 3px 18px rgba(15, 23, 42, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            color: #4338ca;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .nav-links a {
+            display: block;
+            color: #475569;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 9px 11px;
+            border-radius: 9px;
+            transition: 0.25s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a[aria-current="page"] {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .page-heading {
+            background:
+                radial-gradient(circle at 85% 15%, rgba(165, 180, 252, 0.25), transparent 25%),
+                linear-gradient(120deg, #111827, #312e81 65%, #4338ca);
+            color: white;
+            text-align: center;
+            padding: 42px 20px 65px;
+        }
+
+        .page-tag {
+            display: inline-block;
+            color: #c7d2fe;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 9px;
+        }
+
+        .page-heading h1 {
+            font-size: clamp(28px, 4vw, 38px);
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+
+        .page-heading p {
+            max-width: 550px;
+            margin: auto;
+            color: #e0e7ff;
+            font-size: 14px;
+        }
+
+        .form-container {
+            width: min(580px, 90%);
+            margin: -32px auto 55px;
+            padding: 34px;
+            position: relative;
+            background: white;
+            border: 1px solid #e8edf5;
+            border-radius: 20px;
+            box-shadow: 0 15px 45px rgba(15, 23, 42, 0.09);
+            animation: fadeUp 0.6s ease both;
+        }
+
+        .form-icon {
+            width: 60px;
+            height: 60px;
+            display: grid;
+            place-items: center;
+            background: #eef2ff;
+            border-radius: 17px;
+            font-size: 29px;
+            margin-bottom: 17px;
+        }
+
+        .form-container h2 {
+            color: #172033;
+            font-size: 24px;
+            letter-spacing: -0.6px;
+            margin-bottom: 7px;
+        }
+
+        .form-description {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            display: block;
+            width: 100%;
+            border: 1px solid #dbe2ec;
+            border-radius: 10px;
+            padding: 13px 14px;
+            font-family: inherit;
+            font-size: 14px;
+            color: #1e293b;
+            background: #fbfcfe;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s,
+                        background 0.2s;
+        }
+
+        .form-group input {
+            min-height: 47px;
+        }
+
+        .form-group textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #6366f1;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        .rating-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .rating-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-bottom: 23px;
+        }
+
+        .rating-option {
+            position: relative;
+        }
+
+        .rating-option input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+        }
+
+        .rating-option label {
+            display: block;
+            cursor: pointer;
+            padding: 9px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 9px;
+            background: #fff;
+            font-size: 13px;
+            color: #475569;
+            transition: 0.2s ease;
+        }
+
+        .rating-option label:hover {
+            border-color: #a5b4fc;
+            background: #f5f3ff;
+        }
+
+        .rating-option input:checked + label {
+            border-color: #6366f1;
+            background: #eef2ff;
+            color: #4338ca;
+            font-weight: 700;
+        }
+
+        .rating-option input:focus-visible + label {
+            outline: 2px solid #6366f1;
+            outline-offset: 3px;
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 20px;
+            background: linear-gradient(110deg, #4f46e5, #3730a3);
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 9px 22px rgba(67, 56, 202, 0.24);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .form-note {
+            margin-top: 17px;
+            text-align: center;
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        footer {
+            margin-top: auto;
+            background: #0f172a;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 24px 15px;
+            font-size: 12px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 850px) {
+            .navbar {
+                justify-content: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 15px 4%;
+            }
+
+            .nav-links {
+                gap: 3px;
+            }
+
+            .nav-links a {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .page-heading {
+                padding: 35px 20px 55px;
+            }
+
+            .form-container {
+                padding: 25px 20px;
+                margin-bottom: 35px;
+            }
+
+            .form-container h2 {
+                font-size: 21px;
+            }
+
+            .rating-options {
+                gap: 7px;
+            }
+
+            .rating-option label {
+                padding: 8px 10px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">📚 My Library</a>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="books.html">Books</a></li>
+            <li><a href="members.html">Members</a></li>
+            <li><a href="issue-book.html">Issue Book</a></li>
+            <li><a href="return-book.html">Return Book</a></li>
+            <li><a href="feedback.html" aria-current="page">Feedback</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+
+    </nav>
+
+    <main>
+
+        <section class="page-heading">
+            <span class="page-tag">WE VALUE YOUR OPINION</span>
+            <h1>Share Your Feedback</h1>
+            <p>
+                Your suggestions help us improve the library experience
+                and make our services better for everyone.
+            </p>
+        </section>
+
+        <section class="form-container">
+
+            <div class="form-icon">💬</div>
+
+            <h2>We'd Love to Hear From You</h2>
+
+            <p class="form-description">
+                Tell us about your experience with My Library.
+            </p>
+
+            <form onsubmit="submitFeedback(event)">
+
+                <div class="form-group">
+                    <label for="feedbackName">
+                        Your Name <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="feedbackName"
+                        name="feedbackName"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="feedbackEmail">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="feedbackEmail"
+                        name="feedbackEmail"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                    >
+                </div>
+
+                <span class="rating-label">How was your experience?</span>
+
+                <div class="rating-options">
+
+                    <div class="rating-option">
+                        <input type="radio" id="rating1" name="rating" value="1">
+                        <label for="rating1">⭐ 1</label>
+                    </div>
+
+                    <div class="rating-option">
+                        <input type="radio" id="rating2" name="rating" value="2">
+                        <label for="rating2">⭐⭐ 2</label>
+                    </div>
+
+                    <div class="rating-option">
+                        <input type="radio" id="rating3" name="rating" value="3">
+                        <label for="rating3">⭐⭐⭐ 3</label>
+                    </div>
+
+                    <div class="rating-option">
+                        <input type="radio" id="rating4" name="rating" value="4">
+                        <label for="rating4">⭐⭐⭐⭐ 4</label>
+                    </div>
+
+                    <div class="rating-option">
+                        <input type="radio" id="rating5" name="rating" value="5">
+                        <label for="rating5">⭐⭐⭐⭐⭐ 5</label>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="feedbackMessage">
+                        Your Feedback <span class="required">*</span>
+                    </label>
+
+                    <textarea
+                        id="feedbackMessage"
+                        name="feedbackMessage"
+                        placeholder="Share your suggestions or experience..."
+                        required
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="btn">
+                    Submit Feedback &nbsp; →
+                </button>
+
+            </form>
+
+            <p class="form-note">
+                💜 Thank you for helping us improve My Library.
+            </p>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 My Library. All rights reserved. 📖</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
