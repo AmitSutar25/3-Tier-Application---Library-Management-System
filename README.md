@@ -1,12 +1,12 @@
 ### 📚 Library Management System on AWS ###
 
-##📌 Project Overview
+## 📌 Project Overview ##
 
 The Library Management System on AWS is a web application hosted on Amazon EC2 using Nginx. The project demonstrates AWS cloud infrastructure concepts such as VPC networking, public and private subnets, internet-facing and internal Load Balancers, Auto Scaling Groups, AMIs, and Launch Templates.
 
 The website provides a user-friendly interface for browsing books, registering library members, issuing and returning books, and submitting feedback.
 
-##🎯 Project Objectives
+## 🎯 Project Objectives ##
 
 Deploy a website on Amazon EC2 using Nginx.
 
@@ -22,7 +22,7 @@ Create AMIs and Launch Templates for consistent instance deployment.
 
 Understand cloud networking, availability, scalability, and security.
 
-##☁️ AWS Services Used
+## ☁️ AWS Services Used ##
 
 Service
 
@@ -84,7 +84,7 @@ Amazon CloudWatch
 
 Supports monitoring and scaling policies when configured
 
-##💻 Technologies Used
+## 💻 Technologies Used ##
 
 HTML5
 
@@ -106,7 +106,7 @@ Auto Scaling
 
 AMI and Launch Templates
 
-##✨ Application Features
+## ✨ Application Features ##
 
 Home Page: Overview of the Library Management System.
 
@@ -124,9 +124,9 @@ About Page: Displays project information and technologies.
 
 The frontend is built using HTML, CSS, and JavaScript. The website is served by Nginx on Amazon EC2.
 
-## Deployment Steps
+## Deployment Steps ##
 
-#1. Create the VPC
+# 1. Create the VPC #
 
 Create a VPC.
 
@@ -138,7 +138,7 @@ Attach an Internet Gateway to the VPC.
 
 Configure security groups according to the architecture.
 
-#2. Launch EC2 Instances
+# 2. Launch EC2 Instances #
 
 Launch Amazon Linux EC2 instances.
 
@@ -152,7 +152,7 @@ sudo dnf update -y
 sudo dnf install nginx -y
 sudo systemctl enable --now nginx
 
-#3. Deploy the Website
+# 3. Deploy the Website
 
 Copy the website files into the Nginx document root:
 
@@ -162,7 +162,7 @@ Verify that Nginx is running:
 
 sudo systemctl status nginx
 
-#4. Configure the Load Balancers
+# 4. Configure the Load Balancers
 
 Create a target group.
 
