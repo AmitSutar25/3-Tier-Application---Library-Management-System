@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Book | My Library</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --background: #f5f7ff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: white;
+            padding: 16px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            box-shadow: 0 3px 15px rgba(15, 23, 42, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            padding: 9px 11px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+            background: #eef2ff;
+        }
+
+        main {
+            flex: 1;
+            padding: 38px 5% 50px;
+        }
+
+        .page-heading {
+            text-align: center;
+            margin: 5px auto 30px;
+        }
+
+        .page-heading .eyebrow {
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .page-heading h1 {
+            font-size: clamp(28px, 4vw, 38px);
+            margin-bottom: 12px;
+        }
+
+        .page-heading p {
+            max-width: 570px;
+            margin: 0 auto;
+            color: var(--muted);
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.3fr) minmax(250px, 0.7fr);
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border: 1px solid #e8eaf5;
+            border-radius: 20px;
+            box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05);
+        }
+
+        .form-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 26px;
+        }
+
+        .form-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 54px;
+            height: 54px;
+            flex-shrink: 0;
+            background: #eef2ff;
+            border-radius: 15px;
+            font-size: 27px;
+        }
+
+        .form-header h2 {
+            font-size: 21px;
+            margin-bottom: 5px;
+        }
+
+        .form-header p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 9px;
+            color: #334155;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            pointer-events: none;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px 14px 13px 42px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #fff;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #94a3b8;
+        }
+
+        .field-help {
+            display: block;
+            margin-top: 7px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 18px;
+            background: linear-gradient(120deg, #4f46e5, #6366f1);
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(79, 70, 229, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 9px 20px rgba(79, 70, 229, 0.28);
+        }
+
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .info-card {
+            background: white;
+            border: 1px solid #e8eaf5;
+            padding: 23px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.035);
+        }
+
+        .info-card h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 17px;
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            width: 29px;
+            height: 29px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            background: #eef2ff;
+            color: var(--primary);
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .step strong {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .step p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .notice {
+            padding: 16px;
+            border-radius: 12px;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #92400e;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .notice strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .browse-link {
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            padding: 13px;
+            border-radius: 10px;
+            border: 1px solid #c7d2fe;
+            background: #eef2ff;
+            color: var(--primary-dark);
+            font-size: 13px;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .browse-link:hover {
+            background: #e0e7ff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 22px 15px;
+            background: white;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 850px) {
+            .navbar {
+                justify-content: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+
+            .layout {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 25px 4% 35px;
+            }
+
+            .nav-links {
+                gap: 5px;
+            }
+
+            .nav-links a {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .form-container {
+                padding: 22px 18px;
+            }
+
+            .page-heading {
+                margin-bottom: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">📚 My Library</div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="books.html">Books</a></li>
+        <li><a href="members.html">Members</a></li>
+        <li><a href="issue-book.html" class="active">Issue Book</a></li>
+        <li><a href="return-book.html">Return Book</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="about.html">About</a></li>
+    </ul>
+</nav>
+
+<main>
+    <section class="page-heading">
+        <div class="eyebrow">Library services</div>
+        <h1>Issue a Book 📖</h1>
+        <p>Complete the form below to record a book issue. Make sure you enter the correct member ID and book ID.</p>
+    </section>
+
+    <div class="layout">
+        <section class="form-container">
+            <div class="form-header">
+                <div class="form-icon">📚</div>
+                <div>
+                    <h2>Book Issue Form</h2>
+                    <p>Enter the details to continue.</p>
+                </div>
+            </div>
+
+            <form onsubmit="issueBook(event)">
+                <div class="form-group">
+                    <label for="issueMember">Member ID</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">👤</span>
+                        <input
+                            type="number"
+                            id="issueMember"
+                            min="1"
+                            placeholder="Enter member ID"
+                            required
+                        >
+                    </div>
+                    <span class="field-help">Use the ID assigned when the member registered.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="issueBookId">Book ID</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">📘</span>
+                        <input
+                            type="number"
+                            id="issueBookId"
+                            min="1"
+                            placeholder="Enter book ID"
+                            required
+                        >
+                    </div>
+                    <span class="field-help">Find the book ID on the Books page.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="issueDate">Issue Date</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">📅</span>
+                        <input
+                            type="date"
+                            id="issueDate"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">📚 Issue Book</button>
+            </form>
+        </section>
+
+        <aside class="side-panel">
+            <section class="info-card">
+                <h3>How it works</h3>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Enter Member ID</strong>
+                        <p>Identify the registered library member.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Enter Book ID</strong>
+                        <p>Select the book that will be issued.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Select Issue Date</strong>
+                        <p>Choose the date the book is issued.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="notice">
+                <strong>💡 Before you issue</strong>
+                Verify the member and book IDs before submitting. The form's appearance does not itself verify records or update a database.
+            </div>
+
+            <a href="books.html" class="browse-link">🔎 Browse Library Books</a>
+        </aside>
+    </div>
+</main>
+
+<footer>
+    <p>© 2026 My Library Management System | Making book management easier 📚</p>
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+    // Set today's date as the default issue date.
+    // The user can still select a different date.
+    const issueDateInput = document.getElementById("issueDate");
+
+    if (issueDateInput && !issueDateInput.value) {
+        const today = new Date();
+        const localDate = new Date(
+            today.getTime() - today.getTimezoneOffset() * 60000
+        ).toISOString().split("T")[0];
+
+        issueDateInput.value = localDate;
+    }
+</script>
+
+</body>
+</html>
