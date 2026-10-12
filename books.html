@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books | My Library</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --background: #f5f7ff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: var(--white);
+            padding: 16px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            box-shadow: 0 3px 15px rgba(15, 23, 42, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            padding: 9px 11px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+            background: #eef2ff;
+        }
+
+        main {
+            flex: 1;
+            width: 100%;
+            max-width: 1250px;
+            margin: auto;
+            padding: 35px 5% 50px;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #4338ca, #6366f1, #818cf8);
+            color: white;
+            padding: 38px;
+            border-radius: 22px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(79, 70, 229, 0.18);
+        }
+
+        .hero::after {
+            content: "📚";
+            position: absolute;
+            right: 45px;
+            top: 10px;
+            font-size: 100px;
+            opacity: 0.15;
+            transform: rotate(-12deg);
+        }
+
+        .hero .eyebrow {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            opacity: 0.85;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-size: clamp(27px, 4vw, 38px);
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            max-width: 580px;
+            line-height: 1.8;
+            font-size: 15px;
+            color: #eef2ff;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 1px solid #e8eaf5;
+            padding: 22px;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(15, 23, 42, 0.035);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+        }
+
+        .stat-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card h3 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .content-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 18px;
+            border: 1px solid #e8eaf5;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.035);
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .section-heading h2 {
+            font-size: 21px;
+            margin-bottom: 6px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .book-count {
+            background: #eef2ff;
+            color: var(--primary-dark);
+            border-radius: 20px;
+            padding: 8px 13px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .search-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #searchInput,
+        #categoryFilter {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 13px;
+            background: white;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        #searchInput {
+            padding-left: 42px;
+        }
+
+        #searchInput:focus,
+        #categoryFilter:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        #categoryFilter {
+            width: auto;
+            min-width: 170px;
+            cursor: pointer;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 760px;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        thead {
+            background: #f8faff;
+        }
+
+        th {
+            padding: 15px 17px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #64748b;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 16px 17px;
+            font-size: 13px;
+            border-top: 1px solid #edf0f6;
+            color: #475569;
+        }
+
+        tbody tr {
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #f8faff;
+        }
+
+        td:nth-child(2) {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .book-id {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 5px 9px;
+            border-radius: 7px;
+            font-weight: 700;
+        }
+
+        .category {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4338ca;
+            padding: 6px 9px;
+            border-radius: 7px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .availability {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .availability.available {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .availability.unavailable {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 35px 15px;
+            color: var(--muted);
+        }
+
+        .empty-state .empty-icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state h3 {
+            color: var(--text);
+            margin-bottom: 7px;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+        }
+
+        .table-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 22px 15px;
+            background: white;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 850px) {
+            .navbar {
+                justify-content: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 28px;
+            }
+
+            .hero::after {
+                right: 15px;
+                font-size: 70px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 22px 4% 35px;
+            }
+
+            .nav-links {
+                gap: 5px;
+            }
+
+            .nav-links a {
+                display: inline-block;
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 17px;
+            }
+
+            .hero {
+                padding: 25px 20px;
+            }
+
+            .hero::after {
+                display: none;
+            }
+
+            .content-card {
+                padding: 17px;
+            }
+
+            .search-controls {
+                flex-direction: column;
+            }
+
+            #categoryFilter {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">📚 My Library</div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="books.html" class="active">Books</a></li>
+        <li><a href="members.html">Members</a></li>
+        <li><a href="issue-book.html">Issue Book</a></li>
+        <li><a href="return-book.html">Return Book</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="about.html">About</a></li>
+    </ul>
+</nav>
+
+<main>
+    <section class="hero">
+        <div class="eyebrow">Discover your next read</div>
+        <h1>Explore Our Library 📖</h1>
+        <p>Find books, discover new topics, and explore our collection. Search by book name, author, or category to find what you need.</p>
+    </section>
+
+    <section class="stats">
+        <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <h3 id="totalBooks">5</h3>
+            <p>Books in Catalogue</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <h3 id="availableBooks">5</h3>
+            <p>Titles Currently Available</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🏷️</div>
+            <h3 id="totalCategories">4</h3>
+            <p>Different Categories</p>
+        </div>
+    </section>
+
+    <section class="content-card">
+        <div class="section-heading">
+            <div>
+                <h2>Library Books</h2>
+                <p>Search and filter the books in your collection.</p>
+            </div>
+            <span class="book-count" id="resultCount">5 books found</span>
+        </div>
+
+        <div class="search-controls">
+            <div class="search-wrapper">
+                <span class="search-icon">🔎</span>
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search by book name, author, or category..."
+                    aria-label="Search books"
+                >
+            </div>
+
+            <select id="categoryFilter" aria-label="Filter by category">
+                <option value="">All Categories</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Self Help">Self Help</option>
+                <option value="Programming">Programming</option>
+                <option value="Finance">Finance</option>
+            </select>
+        </div>
+
+        <div class="table-container">
+            <table id="booksTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Book Name</th>
+                        <th>Author</th>
+                        <th>Category</th>
+                        <th>ISBN</th>
+                        <th>Available Copies</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><span class="book-id">01</span></td>
+                        <td>The Alchemist</td>
+                        <td>Paulo Coelho</td>
+                        <td><span class="category">Fiction</span></td>
+                        <td>9780061122415</td>
+                        <td><span class="availability available">● 5 copies</span></td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="book-id">02</span></td>
+                        <td>Atomic Habits</td>
+                        <td>James Clear</td>
+                        <td><span class="category">Self Help</span></td>
+                        <td>9780735211292</td>
+                        <td><span class="availability available">● 4 copies</span></td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="book-id">03</span></td>
+                        <td>Clean Code</td>
+                        <td>Robert C. Martin</td>
+                        <td><span class="category">Programming</span></td>
+                        <td>9780132350884</td>
+                        <td><span class="availability available">● 3 copies</span></td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="book-id">04</span></td>
+                        <td>The Pragmatic Programmer</td>
+                        <td>Andrew Hunt</td>
+                        <td><span class="category">Programming</span></td>
+                        <td>9780135957059</td>
+                        <td><span class="availability available">● 3 copies</span></td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="book-id">05</span></td>
+                        <td>Rich Dad Poor Dad</td>
+                        <td>Robert Kiyosaki</td>
+                        <td><span class="category">Finance</span></td>
+                        <td>9781612680194</td>
+                        <td><span class="availability available">● 5 copies</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+            <div class="empty-icon">🔍</div>
+            <h3>No books found</h3>
+            <p>Try another search term or select a different category.</p>
+        </div>
+
+        <div class="table-footer">
+            <span>📘 Browse your library collection</span>
+            <span>Showing <strong id="visibleCount">5</strong> of <strong id="allCount">5</strong> books</span>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 My Library Management System | Built for better book management 📚</p>
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+    // Search and category filtering
+    function searchBooks() {
+        const searchInput = document.getElementById("searchInput");
+        const categoryFilter = document.getElementById("categoryFilter");
+        const table = document.getElementById("booksTable");
+        const rows = table.querySelectorAll("tbody tr");
+
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const selectedCategory = categoryFilter.value.toLowerCase();
+
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const bookName = row.cells[1].textContent.toLowerCase();
+            const author = row.cells[2].textContent.toLowerCase();
+            const category = row.cells[3].textContent.toLowerCase();
+            const isbn = row.cells[4].textContent.toLowerCase();
+
+            const matchesSearch =
+                bookName.includes(searchTerm) ||
+                author.includes(searchTerm) ||
+                category.includes(searchTerm) ||
+                isbn.includes(searchTerm);
+
+            const matchesCategory =
+                selectedCategory === "" || category === selectedCategory;
+
+            const isVisible = matchesSearch && matchesCategory;
+
+            row.style.display = isVisible ? "" : "none";
+
+            if (isVisible) {
+                visibleCount++;
+            }
+        });
+
+        document.getElementById("visibleCount").textContent = visibleCount;
+        document.getElementById("resultCount").textContent =
+            visibleCount + (visibleCount === 1 ? " book found" : " books found");
+
+        document.getElementById("emptyState").style.display =
+            visibleCount === 0 ? "block" : "none";
+
+        table.style.display = visibleCount === 0 ? "none" : "table";
+    }
+
+    // Update catalogue statistics from the displayed sample data
+    function updateBookStats() {
+        const rows = document.querySelectorAll("#booksTable tbody tr");
+        const categories = new Set();
+        let availableTitles = 0;
+        let totalTitles = rows.length;
+
+        rows.forEach(row => {
+            const category = row.cells[3].textContent.trim();
+            const copyText = row.cells[5].textContent.trim();
+            const copies = parseInt(copyText.match(/\d+/)?.[0] || "0", 10);
+
+            categories.add(category);
+
+            if (copies > 0) {
+                availableTitles++;
+            }
+        });
+
+        document.getElementById("totalBooks").textContent = totalTitles;
+        document.getElementById("availableBooks").textContent = availableTitles;
+        document.getElementById("totalCategories").textContent = categories.size;
+        document.getElementById("allCount").textContent = totalTitles;
+    }
+
+    document.getElementById("searchInput").addEventListener("input", searchBooks);
+    document.getElementById("categoryFilter").addEventListener("change", searchBooks);
+
+    updateBookStats();
+    searchBooks();
+</script>
+
+</body>
+</html>
