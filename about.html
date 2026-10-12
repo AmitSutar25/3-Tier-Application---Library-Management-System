@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About Us | My Library</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1e293b;
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .navbar {
+            min-height: 76px;
+            padding: 15px 6%;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 3px 18px rgba(15, 23, 42, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            color: #4338ca;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .nav-links a {
+            display: block;
+            color: #475569;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 9px 11px;
+            border-radius: 9px;
+            transition: 0.25s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a[aria-current="page"] {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 75px 7%;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(165, 180, 252, 0.25), transparent 25%),
+                linear-gradient(120deg, #111827, #312e81 65%, #4338ca);
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+            animation: fadeUp 0.7s ease both;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            color: #c7d2fe;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            margin-bottom: 14px;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            line-height: 1.2;
+            letter-spacing: -1.4px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #a5b4fc;
+        }
+
+        .hero p {
+            max-width: 680px;
+            margin: auto;
+            color: #e0e7ff;
+            font-size: 15px;
+        }
+
+        .container {
+            width: min(1100px, 90%);
+            margin: auto;
+        }
+
+        .about-section {
+            padding: 65px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-label {
+            display: inline-block;
+            color: #4f46e5;
+            background: #eef2ff;
+            border-radius: 30px;
+            padding: 6px 13px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .section-title h2 {
+            font-size: clamp(25px, 3vw, 34px);
+            line-height: 1.3;
+            color: #0f172a;
+            letter-spacing: -0.8px;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            max-width: 650px;
+            margin: auto;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .about-card {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 30px;
+            align-items: center;
+            background: white;
+            border: 1px solid #e8edf5;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04);
+            animation: fadeUp 0.7s ease both;
+        }
+
+        .about-text h3 {
+            color: #172033;
+            font-size: 23px;
+            margin-bottom: 15px;
+        }
+
+        .about-text p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .about-visual {
+            min-height: 230px;
+            border-radius: 18px;
+            background: linear-gradient(145deg, #eef2ff, #e0e7ff);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .about-visual .book-icon {
+            font-size: 78px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 8px 8px rgba(49, 46, 129, 0.13));
+        }
+
+        .about-visual h3 {
+            color: #312e81;
+            font-size: 18px;
+        }
+
+        .about-visual p {
+            color: #6366a6;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .features-section {
+            padding: 10px 0 70px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .feature-card {
+            padding: 27px;
+            border: 1px solid #e8edf5;
+            border-radius: 17px;
+            background: white;
+            transition: transform 0.25s, box-shadow 0.25s,
+                        border-color 0.25s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            border-color: #c7d2fe;
+            box-shadow: 0 14px 30px rgba(49, 46, 129, 0.08);
+        }
+
+        .feature-icon {
+            display: grid;
+            place-items: center;
+            width: 54px;
+            height: 54px;
+            border-radius: 15px;
+            background: #eef2ff;
+            font-size: 27px;
+            margin-bottom: 17px;
+        }
+
+        .feature-card h3 {
+            color: #172033;
+            font-size: 17px;
+            margin-bottom: 9px;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .tech-section {
+            padding: 0 0 70px;
+        }
+
+        .tech-panel {
+            padding: 35px;
+            border: 1px solid #e0e7ff;
+            border-radius: 20px;
+            background: linear-gradient(110deg, #eef2ff, #f5f3ff);
+            text-align: center;
+        }
+
+        .tech-panel h2 {
+            color: #1e1b4b;
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .tech-panel > p {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .tech-item {
+            padding: 11px 18px;
+            background: white;
+            color: #3730a3;
+            border: 1px solid #e0e7ff;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .cta-section {
+            padding: 0 0 70px;
+        }
+
+        .cta-panel {
+            padding: 35px;
+            border-radius: 20px;
+            background: linear-gradient(120deg, #111827, #312e81);
+            text-align: center;
+            color: white;
+        }
+
+        .cta-panel h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .cta-panel p {
+            color: #e0e7ff;
+            font-size: 13px;
+            margin-bottom: 22px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: white;
+            color: #3730a3;
+            font-size: 13px;
+            font-weight: 700;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .cta-button:hover {
+            background: #eef2ff;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            margin-top: auto;
+            background: #0f172a;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 24px 15px;
+            font-size: 12px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 850px) {
+            .navbar {
+                justify-content: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+
+            .about-card {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 15px 4%;
+            }
+
+            .nav-links {
+                gap: 3px;
+            }
+
+            .nav-links a {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .hero {
+                padding: 55px 6%;
+            }
+
+            .about-section {
+                padding: 45px 0;
+            }
+
+            .about-card {
+                padding: 23px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-panel,
+            .cta-panel {
+                padding: 25px 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">📚 My Library</a>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="books.html">Books</a></li>
+            <li><a href="members.html">Members</a></li>
+            <li><a href="issue-book.html">Issue Book</a></li>
+            <li><a href="return-book.html">Return Book</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+            <li><a href="about.html" aria-current="page">About</a></li>
+        </ul>
+
+    </nav>
+
+    <main>
+
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-tag">ABOUT MY LIBRARY</span>
+
+                <h1>
+                    A Smarter Way to<br>
+                    <span>Manage Your Library.</span>
+                </h1>
+
+                <p>
+                    My Library is a web-based Library Management System
+                    designed to make everyday library operations easier,
+                    more organized, and more efficient.
+                </p>
+            </div>
+        </section>
+
+        <section class="about-section">
+
+            <div class="container">
+
+                <div class="section-title">
+                    <span class="section-label">OUR PROJECT</span>
+                    <h2>About Our Library</h2>
+                    <p>
+                        Bringing essential library operations together
+                        in one simple digital platform.
+                    </p>
+                </div>
+
+                <div class="about-card">
+
+                    <div class="about-text">
+                        <h3>Library Management System</h3>
+
+                        <p>
+                            The Library Management System is a simple
+                            web-based application designed to help manage
+                            library books, members, book issue records,
+                            and returned books.
+                        </p>
+
+                        <p>
+                            The website provides separate pages for
+                            browsing books, registering members, issuing
+                            and returning books, and sharing feedback.
+                        </p>
+
+                        <p>
+                            The project uses HTML, CSS, and JavaScript
+                            for the frontend, with PHP and MySQL intended
+                            for server-side processing and database
+                            connectivity.
+                        </p>
+
+                        <p>
+                            Its goal is to help librarians keep library
+                            information organized and make routine
+                            activities easier to manage.
+                        </p>
+                    </div>
+
+                    <div class="about-visual">
+                        <div class="book-icon">📚</div>
+                        <h3>Knowledge for Everyone</h3>
+                        <p>Organize. Discover. Learn.</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="features-section">
+
+            <div class="container">
+
+                <div class="section-title">
+                    <span class="section-label">KEY CAPABILITIES</span>
+                    <h2>What You Can Do</h2>
+                    <p>
+                        Explore the main areas of the library system.
+                    </p>
+                </div>
+
+                <div class="features-grid">
+
+                    <article class="feature-card">
+                        <div class="feature-icon">📖</div>
+                        <h3>Book Management</h3>
+                        <p>
+                            Access the book collection and organize
+                            library book information.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>Member Registration</h3>
+                        <p>
+                            Enter and manage member details through
+                            the member registration page.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">📤</div>
+                        <h3>Book Issuing</h3>
+                        <p>
+                            Access the book issue page to manage
+                            lending activities.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">📥</div>
+                        <h3>Book Returns</h3>
+                        <p>
+                            Access the return page to manage
+                            books brought back to the library.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">💬</div>
+                        <h3>Feedback</h3>
+                        <p>
+                            Share suggestions and feedback to help
+                            improve the library experience.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">🖥️</div>
+                        <h3>Web-Based Access</h3>
+                        <p>
+                            Use the website from a desktop, tablet,
+                            or mobile browser.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="tech-section">
+
+            <div class="container">
+
+                <div class="tech-panel">
+                    <h2>Technology Behind the Project</h2>
+
+                    <p>
+                        Technologies used or planned for building
+                        the library management application.
+                    </p>
+
+                    <div class="tech-list">
+                        <span class="tech-item">HTML5</span>
+                        <span class="tech-item">CSS3</span>
+                        <span class="tech-item">JavaScript</span>
+                        <span class="tech-item">PHP</span>
+                        <span class="tech-item">MySQL</span>
+                        <span class="tech-item">Nginx</span>
+                        <span class="tech-item">AWS EC2</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="cta-section">
+
+            <div class="container">
+
+                <div class="cta-panel">
+                    <h2>Explore My Library</h2>
+
+                    <p>
+                        Ready to explore the collection or manage
+                        library services? Start here.
+                    </p>
+
+                    <a href="books.html" class="cta-button">
+                        Explore Books →
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 My Library. All rights reserved. 📖</p>
+    </footer>
+
+</body>
+
+</html>
